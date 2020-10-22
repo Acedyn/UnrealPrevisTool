@@ -43,7 +43,7 @@ void MenuButtons::OnStartupModule()
         FName("Section_1"),                                                     // The place where we want to place our extension
         CommandList);                                                           // The command list to be called with this extension
 
-	UE_LOG(LogTemp, Warning, TEXT("PrevisUI Module : Menu buttons Loaded"));
+	UE_LOG(LogTemp, Warning, TEXT("PrevisUI Module : Menu buttons loaded"));
 }
 
 void MenuButtons::OnShutdownModule()

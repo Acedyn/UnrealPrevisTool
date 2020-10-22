@@ -9,6 +9,7 @@
 // Forward declaration
 class MenuBar;
 class MenuButtons;
+class WindowBase;
 
 class FPrevisUIEditor : public IPrevisUIEditorInterface
 {
@@ -32,4 +33,5 @@ public:
 public:
     MenuBar* menuBar = nullptr;
     MenuButtons* menuButtons = nullptr;
+    WindowBase* windowBase = nullptr;
 };

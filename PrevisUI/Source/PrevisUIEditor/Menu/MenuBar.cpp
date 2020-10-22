@@ -25,7 +25,7 @@ void MenuBar::OnStartupModule()
 	}
 	
 
-	UE_LOG(LogTemp, Warning, TEXT("PrevisUI Module : Menu bar Loaded"));
+	UE_LOG(LogTemp, Warning, TEXT("PrevisUI Module : Menu bar loaded"));
 }
 
 void MenuBar::OnShutdownModule()
