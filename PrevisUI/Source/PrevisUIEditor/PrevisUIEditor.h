@@ -18,22 +18,24 @@ public:
     virtual void StartupModule() override;
     virtual void ShutdownModule() override;
 
+    // Called at StartupModule() to load all the modules
     virtual void AddModule() override;
 
-    TSharedRef<FWorkspaceItem> GetMenuRoot() { return MenuRoot; };
+    // Singleton like acces to this module
     static inline FPrevisUIEditor& Get()
     {
         return FModuleManager::LoadModuleChecked< FPrevisUIEditor >("PrevisUIEditor");
     }
 
+    // Check if the module was loaded correctly
     static inline bool IsAvailable()
     {
         return FModuleManager::Get().IsModuleLoaded("PrevisUIEditor");
     }
 
-    static TSharedRef<FWorkspaceItem> MenuRoot;
 
 public:
+    // Pointers to modules to be loaded
     MenuBar* menuBar = nullptr;
     MenuButtons* menuButtons = nullptr;
     WindowBase* windowBase = nullptr;

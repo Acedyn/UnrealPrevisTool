@@ -13,11 +13,10 @@ public:
     virtual void OnStartupModule() override;
     virtual void OnShutdownModule() override;
 
-    // Called by OnStartupModule
-    virtual void Initialize() {};
     // Called by OnStartupModule to spawn the window
     virtual TSharedRef<SDockTab> SpawnWindow(const FSpawnTabArgs& TabSpawnArgs);
 
+    // Called by OnStartupModule to create the menu entry
     virtual void CreateMenuEntry(FMenuBuilder& menuBuilder);
 
 private:
