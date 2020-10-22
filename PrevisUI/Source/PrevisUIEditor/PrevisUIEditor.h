@@ -20,6 +20,7 @@ public:
 
     virtual void AddModule() override;
 
+    TSharedRef<FWorkspaceItem> GetMenuRoot() { return MenuRoot; };
     static inline FPrevisUIEditor& Get()
     {
         return FModuleManager::LoadModuleChecked< FPrevisUIEditor >("PrevisUIEditor");
@@ -29,6 +30,8 @@ public:
     {
         return FModuleManager::Get().IsModuleLoaded("PrevisUIEditor");
     }
+
+    static TSharedRef<FWorkspaceItem> MenuRoot;
 
 public:
     MenuBar* menuBar = nullptr;

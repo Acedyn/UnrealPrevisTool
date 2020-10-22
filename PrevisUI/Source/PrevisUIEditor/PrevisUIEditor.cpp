@@ -5,6 +5,8 @@
 
 IMPLEMENT_GAME_MODULE(FPrevisUIEditor, PrevisUIEditor)
 
+TSharedRef<FWorkspaceItem> FPrevisUIEditor::MenuRoot = FWorkspaceItem::NewGroup(FText::FromString("Menu Root"));
+
 void FPrevisUIEditor::AddModule()
 {
     menuBar = new MenuBar;
