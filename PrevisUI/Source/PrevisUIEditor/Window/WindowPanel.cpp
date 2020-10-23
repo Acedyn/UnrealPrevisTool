@@ -1,8 +1,8 @@
 #include "WindowPanel.h"
 
-#include "Widgets/Layout/SScrollBox.h"
-#include "Widgets/Layout/SBorder.h"
-#include "Widgets/Text/STextBlock.h"
+#include "SlateBasics.h"
+#include "SlateExtras.h"
+#include "..\..\..\..\..\..\..\..\Programes\Unreal 4.25\UE_4.25\Engine\Source\Runtime\Slate\Private\Widgets\Views\SListPanel.h"
 
 void WindowPanel::Construct(const FArguments& InArgs)
 {
@@ -14,7 +14,7 @@ void WindowPanel::Construct(const FArguments& InArgs)
         // do anything you need from tool object
     }
 
-    // The acturl content of the widget
+    // The actual content of the widget
     ChildSlot
     [
         SNew(SScrollBox)
