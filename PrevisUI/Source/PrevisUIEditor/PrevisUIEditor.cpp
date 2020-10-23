@@ -29,3 +29,13 @@ void FPrevisUIEditor::ShutdownModule()
 {
     IPrevisUIEditorInterface::ShutdownModule();
 }
+
+TWeakObjectPtr<UTextureRenderTarget2D> FPrevisUIEditor::GetTextureRenderTarget2D()
+{
+    return TextureRenderTarget2D;
+}
+
+void FPrevisUIEditor::SetTextureRenderTarget2D(UTextureRenderTarget2D* TexRenderTarget2D)
+{
+    TextureRenderTarget2D = TexRenderTarget2D;
+}

@@ -1,8 +1,8 @@
 #include "WindowPanel.h"
+#include "WindowViewport.h"
 
 #include "SlateBasics.h"
 #include "SlateExtras.h"
-#include "..\..\..\..\..\..\..\..\Programes\Unreal 4.25\UE_4.25\Engine\Source\Runtime\Slate\Private\Widgets\Views\SListPanel.h"
 
 void WindowPanel::Construct(const FArguments& InArgs)
 {
@@ -29,6 +29,12 @@ void WindowPanel::Construct(const FArguments& InArgs)
                 SNew(STextBlock)
                 .Text(FText::FromString(TEXT("This is a tab example.")))
             ]
+        ]
+        + SScrollBox::Slot()
+        .VAlign(VAlign_Top)
+        .Padding(5)
+        [
+            SNew(WindowViewport)
         ]
     ];
 }

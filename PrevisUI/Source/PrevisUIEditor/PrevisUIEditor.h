@@ -34,9 +34,23 @@ public:
     }
 
 
+    // Get pointer to Texture render target
+    // To make sure UTextureRenderTarget2D lifetime is controlled elsewhere, use "weak" ptr.
+    // This is abstract fucntion and it need to be implemened
+    virtual TWeakObjectPtr<UTextureRenderTarget2D> GetTextureRenderTarget2D();
+
+
+    // Set UTextureRenderTarget2D to TWeakObjectPtr
+    // This is abstract fucntion and it need to be implemened
+    virtual void SetTextureRenderTarget2D(UTextureRenderTarget2D* TexRenderTarget2D);
+
+
 public:
     // Pointers to modules to be loaded
     MenuBar* menuBar = nullptr;
     MenuButtons* menuButtons = nullptr;
     WindowBase* windowBase = nullptr;
+
+private:
+    TWeakObjectPtr<UTextureRenderTarget2D> TextureRenderTarget2D;
 };
