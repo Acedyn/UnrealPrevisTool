@@ -7,6 +7,9 @@
 
 void SWindowViewport::Construct(const FArguments& InArgs)
 {
+	const TArray<FEditorViewportClient*> asaas = GEditor->GetAllViewportClients();
+	UE_LOG(LogTemp, Warning, TEXT("%d Editor viewport clients found"), asaas.Num());
+
 	// Create Viewport Widget
 	WindowViewport = SNew(SViewport)
 		.IsEnabled(true)
@@ -17,13 +20,13 @@ void SWindowViewport::Construct(const FArguments& InArgs)
 
 
 	// Create Viewport Client that will query all the data
-	//WindowViewportClient = MakeShareable(new FWindowViewportClient());
+	EditorViewportClient = TSharedPtr<FEditorViewportClient>(asaas[2]);
 
 	// Create Scene Viewport that will be linked to the Viewport Client
-	//SceneViewport = MakeShareable(new FSceneViewport(WindowViewportClient.Get(), WindowViewport));
+	SceneViewport = MakeShareable(new FSceneViewport(EditorViewportClient.Get(), WindowViewport));
 
 	// Assign SceneViewport to Viewport widget
-	//WindowViewport->SetViewportInterface(SceneViewport.ToSharedRef());
+	WindowViewport->SetViewportInterface(SceneViewport.ToSharedRef());
 
 	// add WindowViewport widget for our custom SWindowViewport widget
 	this->ChildSlot
@@ -35,8 +38,16 @@ void SWindowViewport::Construct(const FArguments& InArgs)
 void SWindowViewport::Tick(const FGeometry& AllottedGeometry, const double InCurrentTime, const float InDeltaTime)
 {
 	// Call FViewport each engine tick
-	//SceneViewport->Draw();
-	UE_LOG(LogTemp, Warning, TEXT("VIEWPORT TICKING OMG"));
+	if (EditorViewportClient->IsPerspective())
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Prespective on"));
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Prespective not set"));
+	}
+	SceneViewport->Draw();
+	UE_LOG(LogTemp, Warning, TEXT("Viewport ticking"));
 }
 
 //void FWindowViewportClient::Draw(FViewport* Viewport, FCanvas* Canvas)
