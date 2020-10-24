@@ -68,7 +68,9 @@ void MenuButtons::MapCommands()
 
 void MenuButtons::MenuCommand1()
 {
-    UE_LOG(LogTemp, Log, TEXT("clicked MenuCommand1"));
+    UE_LOG(LogTemp, Warning, TEXT("clicked MenuCommand1"));
+    const TArray<FEditorViewportClient*> asaas = GEditor->GetAllViewportClients();
+    UE_LOG(LogTemp, Warning, TEXT("%d Editor viewport clients found"), asaas.Num());
 }
 
 

@@ -34,7 +34,7 @@ void WindowPanel::Construct(const FArguments& InArgs)
         .VAlign(VAlign_Top)
         .Padding(5)
         [
-            SNew(WindowViewport)
+            SNew(SWindowViewport)
         ]
     ];
 }

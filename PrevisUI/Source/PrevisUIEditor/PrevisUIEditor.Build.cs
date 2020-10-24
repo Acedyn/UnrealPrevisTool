@@ -6,9 +6,9 @@ public class PrevisUIEditor : ModuleRules
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 
-		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "Slate", "SlateCore", "PrevisUI", "EditorStyle", "MainFrame" });
+		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "Slate", "SlateCore", "PrevisUI", "EditorStyle", "MainFrame", "UnrealEd" });
 
-		PrivateDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "Slate", "SlateCore", "PrevisUI", "EditorStyle", "MainFrame" });
+		PrivateDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "Slate", "SlateCore", "PrevisUI", "EditorStyle", "MainFrame", "UnrealEd" });
 
 	}
 }
