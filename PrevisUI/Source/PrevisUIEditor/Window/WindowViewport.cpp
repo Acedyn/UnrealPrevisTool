@@ -7,8 +7,9 @@
 
 void SWindowViewport::Construct(const FArguments& InArgs)
 {
-	const TArray<FEditorViewportClient*> asaas = GEditor->GetAllViewportClients();
-	UE_LOG(LogTemp, Warning, TEXT("%d Editor viewport clients found"), asaas.Num());
+	// Fetch all editor's viewport
+	const TArray<FEditorViewportClient*> EditorViewportClients = GEditor->GetAllViewportClients();
+	UE_LOG(LogTemp, Warning, TEXT("%d Editor viewport clients found"), EditorViewportClients.Num());
 
 	// Create Viewport Widget
 	WindowViewport = SNew(SViewport)
@@ -19,13 +20,15 @@ void SWindowViewport::Construct(const FArguments& InArgs)
 		.ToolTip(SNew(SToolTip).Text(FText::FromString("SWindowViewport")));
 
 
-	// Create Viewport Client that will query all the data
-	EditorViewportClient = TSharedPtr<FEditorViewportClient>(asaas[2]);
+	// Store one of the editor's viewport
+	EditorViewportClient = TSharedPtr<FEditorViewportClient>(EditorViewportClients[0]);
+	// Set the viewport to perpective
+	EditorViewportClient->SetViewportType(LVT_Perspective);
 
-	// Create Scene Viewport that will be linked to the Viewport Client
+	// Create Scene Viewport that will be linked to the editor's viewport client
 	SceneViewport = MakeShareable(new FSceneViewport(EditorViewportClient.Get(), WindowViewport));
 
-	// Assign SceneViewport to Viewport widget
+	// Assign SceneViewport to viewport widget
 	WindowViewport->SetViewportInterface(SceneViewport.ToSharedRef());
 
 	// add WindowViewport widget for our custom SWindowViewport widget
@@ -49,6 +52,9 @@ void SWindowViewport::Tick(const FGeometry& AllottedGeometry, const double InCur
 	SceneViewport->Draw();
 	UE_LOG(LogTemp, Warning, TEXT("Viewport ticking"));
 }
+
+
+/////////////////////////////////////////    OPTIONAL CUSTOM VIEWPORT CLIENT FOR CUSTOM RENDER TARGET    /////////////////////////////////////////
 
 //void FWindowViewportClient::Draw(FViewport* Viewport, FCanvas* Canvas)
 //{

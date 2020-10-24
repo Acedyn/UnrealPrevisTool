@@ -68,19 +68,8 @@ void MenuButtons::MapCommands()
 
 void MenuButtons::MenuCommand1()
 {
-    UE_LOG(LogTemp, Warning, TEXT("clicked MenuCommand1"));
-    const TArray<FEditorViewportClient*> asaas = GEditor->GetAllViewportClients();
-    UE_LOG(LogTemp, Warning, TEXT("%d Editor viewport clients found"), asaas.Num());
-
-    /*TSharedPtr<FEditorViewportClient> aaa = TSharedPtr<FEditorViewportClient>(asaas[2]);
-    if (aaa->IsPerspective())
-    {
-        UE_LOG(LogTemp, Warning, TEXT("Prespective on"));
-    }
-    else
-    {
-        UE_LOG(LogTemp, Warning, TEXT("Prespective not set"));
-    }*/
+    const TArray<FEditorViewportClient*> EditorViewportClients = GEditor->GetAllViewportClients();
+    UE_LOG(LogTemp, Warning, TEXT("%d Editor viewport clients found"), EditorViewportClients.Num());
 }
 
 

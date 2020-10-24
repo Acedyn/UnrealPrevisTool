@@ -16,9 +16,9 @@ public:
 private:
 	// The viewport container that will be in our tab
 	TSharedPtr<SViewport> WindowViewport;
-	// The viewport that will be populated by the result of WindowViewportClient and projected in the  WindowViewport widget
+	// The viewport that will be populated by the result of EditorViewportClient and projected in the  WindowViewport widget
 	TSharedPtr<FSceneViewport> SceneViewport;
-	// The viewport querying the content to the editor
+	// The viewport of one of the editor's viewport
 	TSharedPtr<FEditorViewportClient> EditorViewportClient;
 
 public:
@@ -26,6 +26,8 @@ public:
 	virtual void Tick(const FGeometry& AllottedGeometry, const double InCurrentTime, const float InDeltaTime) override;
 };
 
+
+/////////////////////////////////////////    OPTIONAL CUSTOM VIEWPORT CLIENT FOR CUSTOM RENDER TARGET    /////////////////////////////////////////
 
 //class FWindowViewportClient : public FViewportClient
 //{
