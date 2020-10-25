@@ -31,12 +31,10 @@ public:
 class FWindowViewportClient : public FViewportClient
 {
 public:
-	/** FViewportClient interface */
-	/**
-	* Execute Draw each tick
-	* This is the place for issue draw cumments and start rendering
-	*/
+	
+	// Called by the FViewport that will be connected to this FWindowViewportClient's Draw function 
 	virtual void Draw(FViewport* Viewport, FCanvas* Canvas) override;
+	// !!!!! Check FViewportClient's depracated functions before define those functions !!!!!
 	virtual bool InputKey(FViewport* Viewport, int32 ControllerId, FKey Key, EInputEvent Event, float AmountDepressed = 1.0f, bool bGamepad = false) override;
 	virtual bool InputAxis(FViewport* Viewport, int32 ControllerId, FKey Key, float Delta, float DeltaTime, int32 NumSamples = 1, bool bGamepad = false) override;
 	virtual bool InputGesture(FViewport* Viewport, EGestureEvent GestureType, const FVector2D& GestureDelta, bool bIsDirectionInvertedFromDevice) override;

@@ -41,6 +41,4 @@ public:
     FWindowBase* windowBase = nullptr;
 
 
-    TSharedPtr<FEditorViewportClient> EditorViewportClient;
-
 };

@@ -3,7 +3,7 @@
 // For modules related classes
 #include "Modules/ModuleInterface.h"
 
-class PrevisUIEditorModule
+class FPrevisUIEditorModule
 {
 public:
     virtual void OnStartupModule() {};
@@ -36,5 +36,5 @@ public:
     virtual void AddModule() {};
 
 protected:
-    TArray<TSharedRef<PrevisUIEditorModule>> Modules;
+    TArray<TSharedRef<FPrevisUIEditorModule>> Modules;
 };

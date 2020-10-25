@@ -56,8 +56,9 @@ void FWindowViewportClient::Draw(FViewport* Viewport, FCanvas* Canvas)
 		FCanvasTileItem TileItem(
 			FVector2D(0, 0), 
 			TextureRenderTarget2D->Resource,
-			FVector2D(Viewport->GetRenderTargetTexture()->GetSizeX(), Viewport->GetRenderTargetTexture()->GetSizeY()),
-			FLinearColor::White);
+			FVector2D(Viewport->GetRenderTargetTexture()->GetSizeX(),
+				Viewport->GetRenderTargetTexture()->GetSizeY()),
+				FLinearColor::White);
 
 		TileItem.BlendMode = ESimpleElementBlendMode::SE_BLEND_Opaque;
 		Canvas->DrawItem(TileItem);

@@ -2,6 +2,9 @@
 #include "../PrevisUIEditor.h"
 #include "MenuBar.h"
 
+#include "Engine/Level.h"
+#include "Camera/CameraActor.h"
+
 #define LOCTEXT_NAMESPACE "MenuButtons"
 
 // Class to abstact commands
@@ -70,6 +73,18 @@ void FMenuButtons::MenuCommand1()
 {
     TArray<FEditorViewportClient*> EditorViewportClients = GEditor->GetAllViewportClients();
     UE_LOG(LogTemp, Warning, TEXT("%d Editor viewport clients found"), EditorViewportClients.Num());
+
+
+    /*UWorld* World = GEditor->GetEditorWorldContext().World();
+    if (World)
+    {
+        TActorIterator<ACameraActor> CameraItr(World);
+        if (!CameraItr)
+        {
+            ACameraActor* cameraActor = (ACameraActor*)World->SpawnActor<ACameraActor>(ACameraActor::StaticClass());
+        }
+        ASceneCapture2D* sceneCaptureActor = (ASceneCapture2D*)World->SpawnActor<ASceneCapture2D>(ASceneCapture2D::StaticClass());
+    }*/
 }
 
 

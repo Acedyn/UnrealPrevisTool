@@ -5,7 +5,7 @@
 #include "LevelEditor.h"
 
 
-class FMenuButtons : public PrevisUIEditorModule
+class FMenuButtons : public FPrevisUIEditorModule
 {
 public:
     virtual ~FMenuButtons() {}
