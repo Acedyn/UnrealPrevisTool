@@ -1,7 +1,7 @@
 #include "MenuBar.h"
 
 
-void MenuBar::OnStartupModule()
+void FMenuBar::OnStartupModule()
 {
 	if (!IsRunningCommandlet())
 	{
@@ -18,7 +18,7 @@ void MenuBar::OnStartupModule()
 			"Window",																// The name of the extension of the menu bar
 			EExtensionHook::After,													// The place where we want to place our extension
 			NULL,																	// The command list to be called when it is open
-			FMenuBarExtensionDelegate::CreateRaw(this, &MenuBar::CreateMenuBar));	// Funcion that will create the UI element
+			FMenuBarExtensionDelegate::CreateRaw(this, &FMenuBar::CreateMenuBar));	// Funcion that will create the UI element
 
 		// Apply the extender to the extensibility manager
 		LevelEditorMenuExtensibilityManager->AddExtender(MenuExtender);
@@ -28,22 +28,22 @@ void MenuBar::OnStartupModule()
 	UE_LOG(LogTemp, Warning, TEXT("PrevisUI Module : Menu bar loaded"));
 }
 
-void MenuBar::OnShutdownModule()
+void FMenuBar::OnShutdownModule()
 {
 	
 }
 
-void MenuBar::CreateMenuBar(FMenuBarBuilder& menuBuilder)
+void FMenuBar::CreateMenuBar(FMenuBarBuilder& menuBuilder)
 {
 	// Create the menu bar
 	menuBuilder.AddPullDownMenu(
 		FText::FromString("Example"),									// The name of the menu bar
 		FText::FromString("Open the Example menu"),						// The tooltip
-		FNewMenuDelegate::CreateRaw(this, &MenuBar::CreateMenuContent),	// Funcion that will create the content of this menu bar
+		FNewMenuDelegate::CreateRaw(this, &FMenuBar::CreateMenuContent),	// Funcion that will create the content of this menu bar
 		"Example");														// Hook name to place future extensions
 }
 
-void MenuBar::CreateMenuContent(FMenuBuilder& menuBuilder)
+void FMenuBar::CreateMenuContent(FMenuBuilder& menuBuilder)
 {
 	// Create sections for the menu
 	menuBuilder.BeginSection("ExampleSection", FText::FromString("Section 1"));
@@ -55,7 +55,7 @@ void MenuBar::CreateMenuContent(FMenuBuilder& menuBuilder)
 	menuBuilder.EndSection();
 }
 
-void MenuBar::AddMenuExtension(
+void FMenuBar::AddMenuExtension(
 	const FMenuExtensionDelegate& extensionDelegate, 
 	FName extensionHook,
 	const TSharedPtr<FUICommandList>& CommandList, 

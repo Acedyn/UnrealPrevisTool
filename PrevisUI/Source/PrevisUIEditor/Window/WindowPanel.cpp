@@ -4,7 +4,7 @@
 #include "SlateBasics.h"
 #include "SlateExtras.h"
 
-void WindowPanel::Construct(const FArguments& InArgs)
+void SWindowPanel::Construct(const FArguments& InArgs)
 {
     // Store the value passed in the Tool argument in the tool variable
     tool = InArgs._Tool;

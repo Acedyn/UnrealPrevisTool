@@ -16,10 +16,8 @@ public:
 private:
 	// The viewport container that will be in our tab
 	TSharedPtr<SViewport> WindowViewport;
-	// The viewport that will be populated by the result of EditorViewportClient and projected in the  WindowViewport widget
+	// The viewport that will be populated by one of the editor's viewport client and projected in the  WindowViewport widget
 	TSharedPtr<FSceneViewport> SceneViewport;
-	// The viewport of one of the editor's viewport
-	TSharedPtr<FEditorViewportClient> EditorViewportClient;
 
 public:
 	// Tick function that will update the content of WindowViewport

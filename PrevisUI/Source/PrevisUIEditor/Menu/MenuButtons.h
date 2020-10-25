@@ -5,10 +5,10 @@
 #include "LevelEditor.h"
 
 
-class MenuButtons : public PrevisUIEditorModule
+class FMenuButtons : public PrevisUIEditorModule
 {
 public:
-    virtual ~MenuButtons() {}
+    virtual ~FMenuButtons() {}
 
     virtual void OnStartupModule() override;
     virtual void OnShutdownModule() override;

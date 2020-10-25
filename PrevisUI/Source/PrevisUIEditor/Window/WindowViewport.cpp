@@ -5,6 +5,7 @@
 #include "SlateExtras.h"
 #include "Slate/SceneViewport.h"
 
+
 void SWindowViewport::Construct(const FArguments& InArgs)
 {
 	// Fetch all editor's viewport
@@ -19,14 +20,11 @@ void SWindowViewport::Construct(const FArguments& InArgs)
 		.EnableBlending(true)
 		.ToolTip(SNew(SToolTip).Text(FText::FromString("SWindowViewport")));
 
-
-	// Store one of the editor's viewport
-	EditorViewportClient = TSharedPtr<FEditorViewportClient>(EditorViewportClients[0]);
-	// Set the viewport to perpective
-	EditorViewportClient->SetViewportType(LVT_Perspective);
+	// Set the edito's viewport to perpective
+	EditorViewportClients[0]->SetViewportType(LVT_Perspective);
 
 	// Create Scene Viewport that will be linked to the editor's viewport client
-	SceneViewport = MakeShareable(new FSceneViewport(EditorViewportClient.Get(), WindowViewport));
+	SceneViewport = MakeShareable(new FSceneViewport(EditorViewportClients[0], WindowViewport));
 
 	// Assign SceneViewport to viewport widget
 	WindowViewport->SetViewportInterface(SceneViewport.ToSharedRef());
@@ -41,18 +39,8 @@ void SWindowViewport::Construct(const FArguments& InArgs)
 void SWindowViewport::Tick(const FGeometry& AllottedGeometry, const double InCurrentTime, const float InDeltaTime)
 {
 	// Call FViewport each engine tick
-	if (EditorViewportClient->IsPerspective())
-	{
-		UE_LOG(LogTemp, Warning, TEXT("Prespective on"));
-	}
-	else
-	{
-		UE_LOG(LogTemp, Warning, TEXT("Prespective not set"));
-	}
 	SceneViewport->Draw();
-	UE_LOG(LogTemp, Warning, TEXT("Viewport ticking"));
 }
-
 
 /////////////////////////////////////////    OPTIONAL CUSTOM VIEWPORT CLIENT FOR CUSTOM RENDER TARGET    /////////////////////////////////////////
 

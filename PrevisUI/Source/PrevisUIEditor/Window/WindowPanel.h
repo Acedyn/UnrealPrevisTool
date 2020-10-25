@@ -3,10 +3,10 @@
 
 #include "Widgets/SCompoundWidget.h"
 
-class WindowPanel : public SCompoundWidget
+class SWindowPanel : public SCompoundWidget
 {
     // Create agument for our custom slate widget (argument are called with SNew(<widgetname>).<argumentname>)
-    SLATE_BEGIN_ARGS(WindowPanel) {}
+    SLATE_BEGIN_ARGS(SWindowPanel) {}
     SLATE_ARGUMENT(TWeakPtr<class WindowBase>, Tool)
     SLATE_END_ARGS()
 

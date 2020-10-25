@@ -7,9 +7,9 @@
 #include "LevelEditor.h"
 
 // Forward declaration
-class MenuBar;
-class MenuButtons;
-class WindowBase;
+class FMenuBar;
+class FMenuButtons;
+class FWindowBase;
 
 class FPrevisUIEditor : public IPrevisUIEditorInterface
 {
@@ -35,9 +35,12 @@ public:
 
 
 public:
-    // Pointers to modules to be loaded
-    MenuBar* menuBar = nullptr;
-    MenuButtons* menuButtons = nullptr;
-    WindowBase* windowBase = nullptr;
+    // Pointers to modules to be loaded, usefull to acces them from any other module
+    FMenuBar* menuBar = nullptr;
+    FMenuButtons* menuButtons = nullptr;
+    FWindowBase* windowBase = nullptr;
+
+
+    TSharedPtr<FEditorViewportClient> EditorViewportClient;
 
 };

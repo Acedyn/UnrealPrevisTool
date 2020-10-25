@@ -9,9 +9,9 @@ IMPLEMENT_GAME_MODULE(FPrevisUIEditor, PrevisUIEditor)
 void FPrevisUIEditor::AddModule()
 {
     // Initialize all the modules
-    menuBar = new MenuBar;
-    menuButtons = new MenuButtons;
-    windowBase = new WindowBase;
+    menuBar = new FMenuBar;
+    menuButtons = new FMenuButtons;
+    windowBase = new FWindowBase;
     // Load all the modules
     Modules.Add(MakeShareable(menuBar));
     Modules.Add(MakeShareable(menuButtons));

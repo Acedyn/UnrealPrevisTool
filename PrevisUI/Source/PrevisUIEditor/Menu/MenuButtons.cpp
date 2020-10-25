@@ -29,7 +29,7 @@ public:
     TSharedPtr<FUICommandInfo> MenuCommand1;
 };
 
-void MenuButtons::OnStartupModule()
+void FMenuButtons::OnStartupModule()
 {
     CommandList = MakeShareable(new FUICommandList);
     // Call RegisterCommands from the MenuCommands class declarated above to register the commands
@@ -39,36 +39,36 @@ void MenuButtons::OnStartupModule()
 
     // Add the menu content to the menu bar we created in MenuBar.cpp
     FPrevisUIEditor::Get().menuBar->AddMenuExtension(
-        FMenuExtensionDelegate::CreateRaw(this, &MenuButtons::MakeMenuEntry),   // Funcion that will actually create the UI element
+        FMenuExtensionDelegate::CreateRaw(this, &FMenuButtons::MakeMenuEntry),   // Funcion that will actually create the UI element
         FName("Section_1"),                                                     // The place where we want to place our extension
         CommandList);                                                           // The command list to be called with this extension
 
 	UE_LOG(LogTemp, Warning, TEXT("PrevisUI Module : Menu buttons loaded"));
 }
 
-void MenuButtons::OnShutdownModule()
+void FMenuButtons::OnShutdownModule()
 {
 
 }
 
-void MenuButtons::MakeMenuEntry(FMenuBuilder& menuBuilder)
+void FMenuButtons::MakeMenuEntry(FMenuBuilder& menuBuilder)
 {
 	// Add an entry for the menu
 	menuBuilder.AddMenuEntry(MenuCommands::Get().MenuCommand1);
 }
 
-void MenuButtons::MapCommands()
+void FMenuButtons::MapCommands()
 {
     // Associate the command that we created with Register to the commandList : 
     CommandList->MapAction(
         MenuCommands::Get().MenuCommand1,                               // The variable to store the command in
-        FExecuteAction::CreateRaw(this, &MenuButtons::MenuCommand1),    // The function to be called when this command is invoked
+        FExecuteAction::CreateRaw(this, &FMenuButtons::MenuCommand1),    // The function to be called when this command is invoked
         FCanExecuteAction());                                           // Function testing of the command can be calls (like a boolean)
 }
 
-void MenuButtons::MenuCommand1()
+void FMenuButtons::MenuCommand1()
 {
-    const TArray<FEditorViewportClient*> EditorViewportClients = GEditor->GetAllViewportClients();
+    TArray<FEditorViewportClient*> EditorViewportClients = GEditor->GetAllViewportClients();
     UE_LOG(LogTemp, Warning, TEXT("%d Editor viewport clients found"), EditorViewportClients.Num());
 }
 

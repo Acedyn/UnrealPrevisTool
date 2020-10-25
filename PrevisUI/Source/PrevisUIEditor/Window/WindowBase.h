@@ -5,10 +5,10 @@
 #include "Widgets/Docking/SDockTab.h"
 
 // Base class for windows
-class WindowBase : public PrevisUIEditorModule
+class FWindowBase : public PrevisUIEditorModule
 {
 public:
-    virtual ~WindowBase() {}
+    virtual ~FWindowBase() {}
 
     virtual void OnStartupModule() override;
     virtual void OnShutdownModule() override;
