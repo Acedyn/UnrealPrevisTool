@@ -23,8 +23,44 @@ void SWindowViewport::Construct(const FArguments& InArgs)
 	// Set the edito's viewport to perpective
 	EditorViewportClients[0]->SetViewportType(LVT_Perspective);
 
+
+	UWorld* World = GEditor->GetEditorWorldContext().World();
+	if (World)
+	{
+		TActorIterator<ACameraActor> CameraItr(World);
+		TActorIterator<ASceneCapture2D> SceneCaptureItr(World);
+		if (CameraItr)
+		{
+			CameraActor = *CameraItr;
+		}
+		else
+		{
+			CameraActor = (ACameraActor*)World->SpawnActor<ACameraActor>(ACameraActor::StaticClass());
+		}
+
+		if (SceneCaptureItr)
+		{
+			SceneCaptureActor = *SceneCaptureItr;
+		}
+		else
+		{
+			SceneCaptureActor = (ASceneCapture2D*)World->SpawnActor<ASceneCapture2D>(ASceneCapture2D::StaticClass());
+		}
+	}
+
+	SceneCaptureComponent = MakeShareable(SceneCaptureActor->GetCaptureComponent2D());
+	SceneCaptureComponent->ProjectionType = ECameraProjectionMode::Type::Perspective;
+
+	RenderTarget2D = MakeShareable(NewObject<UTextureRenderTarget2D>());
+
+	SceneCaptureComponent->TextureTarget = RenderTarget2D.Get();
+	SceneCaptureComponent->CaptureScene();
+
+	CustomViewportClient->SetTextureRenderTarget(RenderTarget2D.Get());
+
+
 	// Create Scene Viewport that will be linked to the editor's viewport client
-	SceneViewport = MakeShareable(new FSceneViewport(EditorViewportClients[0], WindowViewport));
+	SceneViewport = MakeShareable(new FSceneViewport(CustomViewportClient.Get(), WindowViewport));
 
 	// Assign SceneViewport to viewport widget
 	WindowViewport->SetViewportInterface(SceneViewport.ToSharedRef());
@@ -45,10 +81,10 @@ void SWindowViewport::Tick(const FGeometry& AllottedGeometry, const double InCur
 
 /////////////////////////////////////////    OPTIONAL CUSTOM VIEWPORT CLIENT FOR CUSTOM RENDER TARGET    /////////////////////////////////////////
 
-void FWindowViewportClient::Draw(FViewport* Viewport, FCanvas* Canvas)
+void FCustomViewportClient::Draw(FViewport* Viewport, FCanvas* Canvas)
 {
 	// Clear entire canvas
-	Canvas->Clear(FLinearColor::Black);
+	Canvas->Clear(FLinearColor::Blue);
 
 	// Draw SceenCaptureComponent texture to entire canvas
 	if (TextureRenderTarget2D.IsValid() && TextureRenderTarget2D->Resource != nullptr)
@@ -63,4 +99,9 @@ void FWindowViewportClient::Draw(FViewport* Viewport, FCanvas* Canvas)
 		TileItem.BlendMode = ESimpleElementBlendMode::SE_BLEND_Opaque;
 		Canvas->DrawItem(TileItem);
 	}
+}
+
+void FCustomViewportClient::SetTextureRenderTarget(UTextureRenderTarget2D* TextureRenderTarget2DParm)
+{
+	TextureRenderTarget2D = TSharedPtr<UTextureRenderTarget2D>(TextureRenderTarget2DParm);
 }
