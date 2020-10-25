@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Widgets/SCompoundWidget.h"
+#include "Engine/TextureRenderTarget2D.h"
 
 class SWindowViewport : public SCompoundWidget
 {
@@ -27,18 +28,21 @@ public:
 
 /////////////////////////////////////////    OPTIONAL CUSTOM VIEWPORT CLIENT FOR CUSTOM RENDER TARGET    /////////////////////////////////////////
 
-//class FWindowViewportClient : public FViewportClient
-//{
-//public:
-//	/** FViewportClient interface */
-//	/**
-//	* Execute Draw each tick
-//	* This is the place for issue draw cumments and start rendering
-//	*/
-//	virtual void Draw(FViewport* Viewport, FCanvas* Canvas) override;
-//	virtual bool InputKey(FViewport* Viewport, int32 ControllerId, FKey Key, EInputEvent Event, float AmountDepressed = 1.0f, bool bGamepad = false) override;
-//	virtual bool InputAxis(FViewport* Viewport, int32 ControllerId, FKey Key, float Delta, float DeltaTime, int32 NumSamples = 1, bool bGamepad = false) override;
-//	virtual bool InputGesture(FViewport* Viewport, EGestureEvent GestureType, const FVector2D& GestureDelta, bool bIsDirectionInvertedFromDevice) override;
-//	virtual UWorld* GetWorld() const override { return nullptr; }
-//	virtual void RedrawRequested(FViewport* Viewport) override { Viewport->Draw(); }
-//};
+class FWindowViewportClient : public FViewportClient
+{
+public:
+	/** FViewportClient interface */
+	/**
+	* Execute Draw each tick
+	* This is the place for issue draw cumments and start rendering
+	*/
+	virtual void Draw(FViewport* Viewport, FCanvas* Canvas) override;
+	virtual bool InputKey(FViewport* Viewport, int32 ControllerId, FKey Key, EInputEvent Event, float AmountDepressed = 1.0f, bool bGamepad = false) override;
+	virtual bool InputAxis(FViewport* Viewport, int32 ControllerId, FKey Key, float Delta, float DeltaTime, int32 NumSamples = 1, bool bGamepad = false) override;
+	virtual bool InputGesture(FViewport* Viewport, EGestureEvent GestureType, const FVector2D& GestureDelta, bool bIsDirectionInvertedFromDevice) override;
+	virtual UWorld* GetWorld() const override { return nullptr; }
+	virtual void RedrawRequested(FViewport* Viewport) override { Viewport->Draw(); }
+
+private:
+	TSharedPtr<UTextureRenderTarget2D> TextureRenderTarget2D;
+};

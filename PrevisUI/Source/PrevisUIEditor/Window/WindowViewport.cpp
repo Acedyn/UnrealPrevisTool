@@ -42,25 +42,24 @@ void SWindowViewport::Tick(const FGeometry& AllottedGeometry, const double InCur
 	SceneViewport->Draw();
 }
 
+
 /////////////////////////////////////////    OPTIONAL CUSTOM VIEWPORT CLIENT FOR CUSTOM RENDER TARGET    /////////////////////////////////////////
 
-//void FWindowViewportClient::Draw(FViewport* Viewport, FCanvas* Canvas)
-//{
-//	// Clear entire canvas
-//	Canvas->Clear(FLinearColor::Black);
-//
-//	// Draw SceenCaptureComponent texture to entire canvas
-//	auto TextRenderTarget2D = FPrevisUIEditor::Get().GetTextureRenderTarget2D();
-//	if (TextRenderTarget2D.IsValid() && TextRenderTarget2D->Resource != nullptr)
-//	{
-//		FCanvasTileItem TileItem(
-//			FVector2D(0, 0), 
-//			TextRenderTarget2D->Resource,
-//			FVector2D(Viewport->GetRenderTargetTexture()->GetSizeX(), 
-//			Viewport->GetRenderTargetTexture()->GetSizeY()),
-//			FLinearColor::White);
-//
-//		TileItem.BlendMode = ESimpleElementBlendMode::SE_BLEND_Opaque;
-//		Canvas->DrawItem(TileItem);
-//	}
-//}
+void FWindowViewportClient::Draw(FViewport* Viewport, FCanvas* Canvas)
+{
+	// Clear entire canvas
+	Canvas->Clear(FLinearColor::Black);
+
+	// Draw SceenCaptureComponent texture to entire canvas
+	if (TextureRenderTarget2D.IsValid() && TextureRenderTarget2D->Resource != nullptr)
+	{
+		FCanvasTileItem TileItem(
+			FVector2D(0, 0), 
+			TextureRenderTarget2D->Resource,
+			FVector2D(Viewport->GetRenderTargetTexture()->GetSizeX(), Viewport->GetRenderTargetTexture()->GetSizeY()),
+			FLinearColor::White);
+
+		TileItem.BlendMode = ESimpleElementBlendMode::SE_BLEND_Opaque;
+		Canvas->DrawItem(TileItem);
+	}
+}
