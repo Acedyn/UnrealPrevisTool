@@ -74,33 +74,6 @@ void FMenuButtons::MenuCommand1()
     TArray<FEditorViewportClient*> EditorViewportClients = GEditor->GetAllViewportClients();
     UE_LOG(LogTemp, Warning, TEXT("%d Editor viewport clients found"), EditorViewportClients.Num());
 
-
-    UWorld* World = GEditor->GetEditorWorldContext().World();
-    if (World)
-    {
-        TActorIterator<ACameraActor> CameraItr(World);
-        if (!CameraItr)
-        {
-            ACameraActor* cameraActor = (ACameraActor*)World->SpawnActor<ACameraActor>(ACameraActor::StaticClass());
-        }
-        ASceneCapture2D* sceneCaptureActor = (ASceneCapture2D*)World->SpawnActor<ASceneCapture2D>(ASceneCapture2D::StaticClass());
-
-        //USceneCaptureComponent2D* SceneCaptureComponent = sceneCaptureActor->GetCaptureComponent2D();
-
-
-        USceneCaptureComponent2D* SceneCaptureComponent = sceneCaptureActor->GetCaptureComponent2D();
-        SceneCaptureComponent->ProjectionType = ECameraProjectionMode::Type::Perspective;
-
-        UTextureRenderTarget2D* RenderTarget2D = NewObject<UTextureRenderTarget2D>();
-
-        SceneCaptureComponent->TextureTarget = RenderTarget2D;
-        SceneCaptureComponent->CaptureScene();
-
-        /*if (SceneCaptureComponent == nullptr)
-        {
-            UE_LOG(LogTemp, Warning, TEXT("aaaaaaaaaaaaaaaaaaaaaaaaaaaa"));
-        }*/
-    }
 }
 
 

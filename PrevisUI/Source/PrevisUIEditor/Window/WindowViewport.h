@@ -31,6 +31,8 @@ private:
 class SWindowViewport : public SCompoundWidget
 {
 public:
+	~SWindowViewport();
+
 	// Create agument for our custom slate widget (argument are called with SNew(<widgetname>).<argumentname>)
 	// Here there is no arguments
 	SLATE_BEGIN_ARGS(SWindowViewport) { }
@@ -45,10 +47,10 @@ private:
 	// The viewport that will be populated by one of the editor's viewport client (or the custom one) and projected in the  WindowViewport widget
 	TSharedPtr<FSceneViewport> SceneViewport;
 	// Custom viewport client that will feed the scene viewport with a UTextureRenderTarget2D that can be created from anything (cam, texture, ...)
-	TSharedPtr<FCustomViewportClient> CustomViewportClient = MakeShareable(new FCustomViewportClient);
+	FCustomViewportClient* CustomViewportClient = new FCustomViewportClient;
 
-	TSharedPtr<USceneCaptureComponent2D> SceneCaptureComponent;
-	TSharedPtr<UTextureRenderTarget2D> RenderTarget2D;
+	USceneCaptureComponent2D* SceneCaptureComponent;
+	UTextureRenderTarget2D* RenderTarget2D;
 
 	ACameraActor* CameraActor;
 	ASceneCapture2D* SceneCaptureActor;

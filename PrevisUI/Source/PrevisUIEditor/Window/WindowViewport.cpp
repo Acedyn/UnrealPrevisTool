@@ -6,6 +6,16 @@
 #include "Slate/SceneViewport.h"
 
 
+SWindowViewport::~SWindowViewport()
+{
+	//!!!!!!!!!!!!!!!!!!!!!! MEMORY LEAK HERE - FIX IMPORTANT !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	// TODO : fix errors and then use smartpointers
+
+	//delete CustomViewportClient;
+	//delete SceneCaptureComponent;
+	//delete RenderTarget2D;
+}
+
 void SWindowViewport::Construct(const FArguments& InArgs)
 {
 	// Fetch all editor's viewport
@@ -23,10 +33,11 @@ void SWindowViewport::Construct(const FArguments& InArgs)
 	// Set the edito's viewport to perpective
 	EditorViewportClients[0]->SetViewportType(LVT_Perspective);
 
-
+	// Get a reference to the world
 	UWorld* World = GEditor->GetEditorWorldContext().World();
 	if (World)
 	{
+		// If the world does not contain any camera of scene capture -> Create one
 		TActorIterator<ACameraActor> CameraItr(World);
 		TActorIterator<ASceneCapture2D> SceneCaptureItr(World);
 		if (CameraItr)
@@ -48,19 +59,35 @@ void SWindowViewport::Construct(const FArguments& InArgs)
 		}
 	}
 
-	SceneCaptureComponent = MakeShareable(SceneCaptureActor->GetCaptureComponent2D());
+	// Get the capture component of the scene capture
+	SceneCaptureComponent = SceneCaptureActor->GetCaptureComponent2D();
+	// Set capture component's parameters
 	SceneCaptureComponent->ProjectionType = ECameraProjectionMode::Type::Perspective;
+	SceneCaptureComponent->FOVAngle = 90.0f;
+	SceneCaptureComponent->CaptureSource = ESceneCaptureSource::SCS_SceneColorHDR;
+	SceneCaptureComponent->CompositeMode = ESceneCaptureCompositeMode::SCCM_Overwrite;
+	SceneCaptureComponent->bCaptureOnMovement = false;
+	SceneCaptureComponent->bCaptureEveryFrame = false;
+	SceneCaptureComponent->MaxViewDistanceOverride = -1.0f;
+	SceneCaptureComponent->bAutoActivate = true;
+	SceneCaptureComponent->DetailMode = EDetailMode::DM_High;
 
-	RenderTarget2D = MakeShareable(NewObject<UTextureRenderTarget2D>());
+	// Create render target to store the result of the capture component
+	RenderTarget2D = NewObject<UTextureRenderTarget2D>();
+	// Set the clear color to blue (so if the viewport is blue its a problem from the source)
+	RenderTarget2D->ClearColor = FLinearColor::Blue;
+	// Set the resolution of the render target (TODO : adapt the resolution to the viewport size)
+	RenderTarget2D->InitAutoFormat(512, 512);
 
-	SceneCaptureComponent->TextureTarget = RenderTarget2D.Get();
-	SceneCaptureComponent->CaptureScene();
+	// Link the scene capture component with the render target
+	SceneCaptureComponent->TextureTarget = RenderTarget2D;
 
-	CustomViewportClient->SetTextureRenderTarget(RenderTarget2D.Get());
+	// Link the render target to the viewport client
+	CustomViewportClient->SetTextureRenderTarget(RenderTarget2D);
 
 
 	// Create Scene Viewport that will be linked to the editor's viewport client
-	SceneViewport = MakeShareable(new FSceneViewport(CustomViewportClient.Get(), WindowViewport));
+	SceneViewport = MakeShareable(new FSceneViewport(CustomViewportClient, WindowViewport));
 
 	// Assign SceneViewport to viewport widget
 	WindowViewport->SetViewportInterface(SceneViewport.ToSharedRef());
@@ -74,7 +101,9 @@ void SWindowViewport::Construct(const FArguments& InArgs)
 
 void SWindowViewport::Tick(const FGeometry& AllottedGeometry, const double InCurrentTime, const float InDeltaTime)
 {
-	// Call FViewport each engine tick
+	// Update the render target
+	SceneCaptureComponent->CaptureScene();
+	// Update the viewport (also calls the Draw function of the viewport client connected to this viewport)
 	SceneViewport->Draw();
 }
 
