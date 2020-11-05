@@ -36,6 +36,7 @@ public:
 	// Create agument for our custom slate widget (argument are called with SNew(<widgetname>).<argumentname>)
 	// Here there is no arguments
 	SLATE_BEGIN_ARGS(SWindowViewport) { }
+	SLATE_ARGUMENT(TSharedPtr<class FString>, Name)
 	SLATE_END_ARGS()
 
 	// Create the content of the custom widget
@@ -54,6 +55,8 @@ private:
 
 	ACameraActor* CameraActor;
 	ASceneCapture2D* SceneCaptureActor;
+
+	TSharedPtr<class FString> Name;
 
 public:
 	// Tick function that will update the content of WindowViewport

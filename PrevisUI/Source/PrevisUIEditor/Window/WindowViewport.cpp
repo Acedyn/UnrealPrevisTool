@@ -18,6 +18,9 @@ SWindowViewport::~SWindowViewport()
 
 void SWindowViewport::Construct(const FArguments& InArgs)
 {
+	// Store the value passed in the Tool argument in the tool variable
+	Name = InArgs._Name;
+
 	// Fetch all editor's viewport
 	const TArray<FEditorViewportClient*> EditorViewportClients = GEditor->GetAllViewportClients();
 	UE_LOG(LogTemp, Warning, TEXT("%d Editor viewport clients found"), EditorViewportClients.Num());
@@ -52,12 +55,24 @@ void SWindowViewport::Construct(const FArguments& InArgs)
 		if (SceneCaptureItr)
 		{
 			SceneCaptureActor = *SceneCaptureItr;
+
+			if (Name.IsValid() && **Name == FString("Output"))
+			{
+				FString SceneCaptureActorLabel = SceneCaptureActor->GetActorLabel();
+				UE_LOG(LogTemp, Warning, TEXT("Window : %s found a SceneCaptureActor called %s"), *(*Name), *SceneCaptureActorLabel);
+			}
 		}
 		else
 		{
 			SceneCaptureActor = (ASceneCapture2D*)World->SpawnActor<ASceneCapture2D>(ASceneCapture2D::StaticClass());
+
+			if (Name.IsValid() && **Name == FString("Output"))
+			{
+				UE_LOG(LogTemp, Warning, TEXT("Window : %s could not find a SceneCaptureActor"), *(*Name));
+			}
 		}
 	}
+
 
 	// Get the capture component of the scene capture
 	SceneCaptureComponent = SceneCaptureActor->GetCaptureComponent2D();
@@ -75,7 +90,7 @@ void SWindowViewport::Construct(const FArguments& InArgs)
 	// Create render target to store the result of the capture component
 	RenderTarget2D = NewObject<UTextureRenderTarget2D>();
 	// Set the clear color to blue (so if the viewport is blue its a problem from the source)
-	RenderTarget2D->ClearColor = FLinearColor::Blue;
+	RenderTarget2D->ClearColor = FLinearColor::Black;
 	// Set the resolution of the render target (TODO : adapt the resolution to the viewport size)
 	RenderTarget2D->InitAutoFormat(512, 512);
 

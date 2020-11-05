@@ -20,7 +20,7 @@ void SWindowPanel::Construct(const FArguments& InArgs)
         SNew(SScrollBox)
         + SScrollBox::Slot()
         .VAlign(VAlign_Top)
-        .Padding(5)
+        .Padding(2)
         [
             SNew(SBorder)
             .BorderBackgroundColor(FColor(192, 192, 192, 255))
@@ -31,10 +31,51 @@ void SWindowPanel::Construct(const FArguments& InArgs)
             ]
         ]
         + SScrollBox::Slot()
-        .VAlign(VAlign_Top)
-        .Padding(5)
+        .HAlign(HAlign_Left)
+        .Padding(2)
         [
-            SNew(SWindowViewport)
+
+            SNew(SVerticalBox)
+            + SVerticalBox::Slot()
+            .VAlign(VAlign_Top)
+            .Padding(2)
+            [
+                SNew(SHorizontalBox)
+                + SHorizontalBox::Slot()
+                .HAlign(HAlign_Left)
+                .Padding(2)
+                [
+                    SNew(SWindowViewport)
+                    .Name(MakeShareable(new FString("Input")))
+                ]
+                + SHorizontalBox::Slot()
+                .HAlign(HAlign_Right)
+                .Padding(2)
+                [
+                    SNew(SWindowViewport)
+                    .Name(MakeShareable(new FString("Matte")))
+                ]
+            ]
+            + SVerticalBox::Slot()
+            .VAlign(VAlign_Top)
+            .Padding(2)
+            [
+                SNew(SHorizontalBox)
+                + SHorizontalBox::Slot()
+                .HAlign(HAlign_Left)
+                .Padding(2)
+                [
+                    SNew(SWindowViewport)
+                    .Name(MakeShareable(new FString("AO")))
+                ]
+                + SHorizontalBox::Slot()
+                .HAlign(HAlign_Right)
+                .Padding(2)
+                [
+                    SNew(SWindowViewport)
+                    .Name(MakeShareable(new FString("Output")))
+                ]
+            ]
         ]
     ];
 }
