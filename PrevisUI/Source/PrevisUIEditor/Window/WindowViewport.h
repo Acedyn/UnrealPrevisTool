@@ -50,11 +50,11 @@ private:
 	// Custom viewport client that will feed the scene viewport with a UTextureRenderTarget2D that can be created from anything (cam, texture, ...)
 	FCustomViewportClient* CustomViewportClient = new FCustomViewportClient;
 
-	USceneCaptureComponent2D* SceneCaptureComponent;
-	UTextureRenderTarget2D* RenderTarget2D;
+	USceneCaptureComponent2D* SceneCaptureComponent = nullptr;
+	UTextureRenderTarget2D* RenderTarget2D = nullptr;
 
-	ACameraActor* CameraActor;
-	ASceneCapture2D* SceneCaptureActor;
+	ACameraActor* CameraActor = nullptr;
+	ASceneCapture2D* SceneCaptureActor = nullptr;
 
 	TSharedPtr<class FString> Name;
 

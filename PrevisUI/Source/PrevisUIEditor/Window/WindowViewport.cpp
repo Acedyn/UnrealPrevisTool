@@ -41,35 +41,24 @@ void SWindowViewport::Construct(const FArguments& InArgs)
 	if (World)
 	{
 		// If the world does not contain any camera of scene capture -> Create one
-		TActorIterator<ACameraActor> CameraItr(World);
 		TActorIterator<ASceneCapture2D> SceneCaptureItr(World);
-		if (CameraItr)
-		{
-			CameraActor = *CameraItr;
-		}
-		else
-		{
-			CameraActor = (ACameraActor*)World->SpawnActor<ACameraActor>(ACameraActor::StaticClass());
-		}
 
-		if (SceneCaptureItr)
+		for (SceneCaptureItr; SceneCaptureItr; ++SceneCaptureItr)
 		{
-			SceneCaptureActor = *SceneCaptureItr;
-
-			if (Name.IsValid() && **Name == FString("Output"))
+			if (SceneCaptureItr->GetActorLabel() == *Name)
 			{
-				FString SceneCaptureActorLabel = SceneCaptureActor->GetActorLabel();
-				UE_LOG(LogTemp, Warning, TEXT("Window : %s found a SceneCaptureActor called %s"), *(*Name), *SceneCaptureActorLabel);
+					SceneCaptureActor = *SceneCaptureItr;
+					FString SceneCaptureActorLabel = SceneCaptureActor->GetActorLabel();
+					UE_LOG(LogTemp, Warning, TEXT("Window : %s found a SceneCaptureActor called %s"), *(*Name), *SceneCaptureActorLabel);
 			}
 		}
-		else
+
+		if (SceneCaptureActor == nullptr)
 		{
 			SceneCaptureActor = (ASceneCapture2D*)World->SpawnActor<ASceneCapture2D>(ASceneCapture2D::StaticClass());
-
-			if (Name.IsValid() && **Name == FString("Output"))
-			{
-				UE_LOG(LogTemp, Warning, TEXT("Window : %s could not find a SceneCaptureActor"), *(*Name));
-			}
+			SceneCaptureActor->SetActorLabel(*Name);
+			FString SceneCaptureActorLabel = SceneCaptureActor->GetActorLabel();
+			UE_LOG(LogTemp, Warning, TEXT("Window : %s could not find a SceneCaptureActor and created one"), *(*Name));
 		}
 	}
 

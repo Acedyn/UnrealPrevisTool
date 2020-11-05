@@ -46,14 +46,14 @@ void SWindowPanel::Construct(const FArguments& InArgs)
                 .Padding(2)
                 [
                     SNew(SWindowViewport)
-                    .Name(MakeShareable(new FString("Input")))
+                    .Name(MakeShareable(new FString("InputCapture")))
                 ]
                 + SHorizontalBox::Slot()
                 .HAlign(HAlign_Right)
                 .Padding(2)
                 [
                     SNew(SWindowViewport)
-                    .Name(MakeShareable(new FString("Matte")))
+                    .Name(MakeShareable(new FString("MatteCapture")))
                 ]
             ]
             + SVerticalBox::Slot()
@@ -66,14 +66,14 @@ void SWindowPanel::Construct(const FArguments& InArgs)
                 .Padding(2)
                 [
                     SNew(SWindowViewport)
-                    .Name(MakeShareable(new FString("AO")))
+                    .Name(MakeShareable(new FString("AOCapture")))
                 ]
                 + SHorizontalBox::Slot()
                 .HAlign(HAlign_Right)
                 .Padding(2)
                 [
                     SNew(SWindowViewport)
-                    .Name(MakeShareable(new FString("Output")))
+                    .Name(MakeShareable(new FString("OutputCapture")))
                 ]
             ]
         ]
